@@ -29,7 +29,7 @@ This project involves several key steps:
 
 This repository is for viewing purposes only. If you are interested in the details of the analysis or the visualizations created, please explore the following files:
 
--   **hons_da_assignment_1_brief.pdf:** View the brief pdf for a detailed understanding of what the project entailed and the expected outputs.
+-   **hons_da_assignment_1_brief.pdf:** View the brief pdf for a detailed understanding of what the project entailed and the expected outcomes.
 -   **23560444_Assignment1.pdf:** View the PDF report to see the graphs created through the analysis.
 -   **23560444_Assignment1.qmd:** Review the Quarto markdown file for the code and documentation.
 
