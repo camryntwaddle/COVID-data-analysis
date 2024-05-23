@@ -558,7 +558,7 @@ My aim with the following graphs is to first explore the state of the world duri
 
 ### Graph 8
 
-This graph models the GDP per capita on the y-axis and the total number of COVID cases per million on the x-axis. Each bubble represents a country and the size represents the population of that country. Country's are coloured based on their continents. Please over hover a bubble for more information.
+This graph models the GDP per capita on the y-axis and the total number of COVID cases per million on the x-axis. Each bubble represents a country and the size represents the population of that country. Country's are coloured based on their continents. Please over hover a bubble for more information. **This graph is meant to be interactive and make use of a tooltip to convey more information.**
 
 ```{r}
 #| echo: false
@@ -689,7 +689,9 @@ USA_heatmap
 
 ### Graph 12
 
-This graphs maps two data points to each South African province. The lighter bubble represents the population of that province, and the darker bubble shows the number of confirmed cases for that province. Please hover over each bubble for more information. *Also please be aware the size has been hard coded to fit into the window which may cause the map to be slightly distorted, this can be adjusted for a better view.*
+This graphs maps two data points to each South African province. The lighter bubble represents the population of that province, and the darker bubble shows the number of confirmed cases for that province. Please hover over each bubble for more information. **This graph is meant to be interactive and make use of a tooltip to convey more information.**
+
+*Also please be aware the size has been hard coded to fit into the window which may cause the map to be slightly distorted, this can be adjusted for a better view.*
 
 ```{r}
 #| echo: false
