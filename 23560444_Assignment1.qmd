@@ -1,10 +1,16 @@
 ---
 title: "23560444_Assignment1"
 author: "C Twaddle"
-format: html
-editor: visual
-editor_options: 
-  chunk_output_type: inline
+format:
+  pdf:
+    toc: false
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=22.4mm
+      - left=22.4mm
+      - right=22.4mm
+      - bottom=22.4mm
 ---
 
 # Assignment 1
@@ -12,6 +18,9 @@ editor_options:
 ## Part A: Figure reproduction
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 library(hrbrthemes)
 library(ggiraph)
 library(tidyverse)
@@ -26,6 +35,7 @@ library(grid)
 library(ggiraph)
 library(treemapify)
 library(ggthemes)
+library(webshot2)
 ```
 
 ### Data Wrangling
@@ -35,8 +45,9 @@ All data inputting and most editing happens in this chunk.
 -   Province data obtained from: https://health.google.com/covid-19/open-data/raw-data
 
 ```{r}
-#| warning: false
+#| echo: false
 #| message: false
+#| warning: false
 case_data_clean <- read.csv("data/cumulative-case-data.csv") |>
   drop_na(adjusted_cumulative_cases) |>
   mutate(date = as.Date(date, format="%d-%m-%Y")) |>
@@ -93,6 +104,9 @@ provinces_data_cut <- provinces_data |>
 ### Graph 1: Daily Vaccinations
 
 ```{r fig.width=10, fig.height=5}
+#| echo: false
+#| message: false
+#| warning: false
 daily_table <- case_data_clean |>
   filter(vaccinated_daily != 0) |>
   arrange(desc(date)) |> 
@@ -148,6 +162,9 @@ plot_grid(daily_vac,
 ### Graph 2: Daily Confirmed Cases
 
 ```{r fig.width=10, fig.height=5}
+#| echo: false
+#| message: false
+#| warning: false
 
 daily_con_cases <- case_data_clean |>
   filter(!is.na(seven_day_mean)) |> 
@@ -198,6 +215,8 @@ daily_con_cases
 ### Graph 3: Total Active Cases by Day
 
 ```{r fig.width=10, fig.height=5}
+#| echo: false
+#| message: false
 #| warning: false
 
 daily_act_cases <- case_data_clean |>
@@ -232,6 +251,9 @@ daily_act_cases
 ### Graph 4: Daily Case Trends per Province
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 
 create_province_plots <- function(provinces_data_cut, locations) {  #function that creates all province graphs at once 
   plots <- lapply(locations, function(location) {
@@ -288,6 +310,9 @@ plot_grid(title, plot_row, ncol=1, rel_heights = c(0.1,1))+
 ### Graph 5: Active Cases vs Confirmed Cases
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 con_v_act_cases <- case_data_clean |>
   ggplot(aes(x = date)) +
   geom_text(data = subset(case_data_clean, date == max(date)), 
@@ -328,6 +353,9 @@ con_v_act_cases
 ### Graph 6: Provincial Infection per 100 000 People
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 prov_inf <- inf_rate_data |> 
   ggplot(aes(x = inf_rate, y = reorder(subregion1_name, inf_rate))) +
   geom_bar(stat = "identity", fill = "#b64b4b")+
@@ -359,6 +387,8 @@ prov_inf
 ### Graph 7: Estimated Reproduction Rate
 
 ```{r fig.width=10, fig.height=4}
+#| echo: false
+#| message: false
 #| warning: false
 Rt_calcs <- case_data_clean |> 
   select(date, recoveries, deaths_daily, cases_daily) |> 
@@ -414,6 +444,9 @@ rt_graph
 The following is an Rt graph made with an external data source (https://github.com/owid) that already computed the reproduction rate. This graph was left in because it is closer to the screenshot and it looks nice.
 
 ```{r fig.width=10, fig.height=4}
+#| echo: false
+#| message: false
+#| warning: false
 
 SA_data <- world_data |> 
   filter(location == "South Africa") |> 
@@ -468,6 +501,9 @@ I used a combination of world wide data and South African data to make the follo
 -   Excess mortality data: https://github.com/owid
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 
 world_data <- read.csv("data/owid-covid-data.csv") |> 
   mutate(date = as.Date(date, format="%Y-%m-%d"))
@@ -525,6 +561,8 @@ My aim with the following graphs is to first explore the state of the world duri
 This graph models the GDP per capita on the y-axis and the total number of COVID cases per million on the x-axis. Each bubble represents a country and the size represents the population of that country. Country's are coloured based on their continents. Please over hover a bubble for more information.
 
 ```{r}
+#| echo: false
+#| message: false
 #| warning: false
 
 world_bubble <- world_data_cut |>
@@ -563,6 +601,9 @@ girafe(ggobj = world_bubble, width = 12, height = 7.7)
 This treemap models the 10 countries with the most patients in the ICU per million on December 31 2020. Each block is sized based on the number of patients, and are coloured based on their continents. This shows how many patients were critic by the end of the first year of the pandemic.
 
 ```{r fig.width=10, fig.height=6}
+#| echo: false
+#| message: false
+#| warning: false
 tree_map <- world_data |> 
   filter(!is.na(icu_patients_per_million)) |> 
   filter(date == dmy("31-12-2020")) |> 
@@ -590,6 +631,9 @@ tree_map
 Graph 10 shows the excess mortality of South Africa, the United Kingdom, Japan and Brazil. These countries were chosen to show the difference in excess morality between developed and developing countries.
 
 ```{r fig.width=10, fig.height=6}
+#| echo: false
+#| message: false
+#| warning: false
 
 excess_deaths_world <- excess_deaths|> 
   group_by(location)|>
@@ -615,6 +659,9 @@ excess_deaths_world
 This graph is a heatmap to show the progression of deaths of females per age group due to COVID in the United States.
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 USA_heatmap <- USA_data |>
   filter(year == 2021) |>
   group_by(month) |> 
@@ -645,6 +692,8 @@ USA_heatmap
 This graphs maps two data points to each South African province. The lighter bubble represents the population of that province, and the darker bubble shows the number of confirmed cases for that province. Please hover over each bubble for more information. *Also please be aware the size has been hard coded to fit into the window which may cause the map to be slightly distorted, this can be adjusted for a better view.*
 
 ```{r}
+#| echo: false
+#| message: false
 #| warning: false
 provinces_map <- ggplot(data = SA, aes(x = long, y = lat)) + 
   geom_polygon(aes(group = group), fill = "white", color = "black") +
@@ -683,6 +732,8 @@ girafe(ggobj = provinces_map, width = 7, height= 4)
 This graph plots the number of COVID test administered in South Africa from 2020 to 2022. An additional line is plotted to show the number of positive tests.
 
 ```{r fig.width=10, fig.height=7}
+#| echo: false
+#| message: false
 #| warning: false
 
 test_vs_pos_data <- world_data |> 
@@ -720,6 +771,8 @@ test_vs_pos
 The following graph plots the proportion of each province's population that is vaccinated as a percentage.
 
 ```{r fig.width=7, fig.height=7.5}
+#| echo: false
+#| message: false
 #| warning: false
 
 vaccination_per_province <- province_population |> 
